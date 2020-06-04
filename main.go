@@ -11,6 +11,12 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	if param != "" {
 		fmt.Fprintln(w, "Param from URL is "+param)
 	}
+
+	key := r.FormValue("key")
+	if key != "" {
+		fmt.Fprintln(w, "Param from URL by FormValue is "+key)
+	}
+
 	fmt.Fprintln(w, "test")
 	w.Write([]byte("!!!"))
 }
