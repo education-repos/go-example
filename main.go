@@ -17,8 +17,17 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(w, "Param from URL by FormValue is "+key)
 	}
 
-	fmt.Fprintln(w, "test")
-	w.Write([]byte("!!!"))
+	ua := r.UserAgent()
+	if ua != "" {
+		fmt.Fprintln(w, "Your User Agent is "+ua)
+	}
+
+	accept := r.Header.Get("Accept")
+	if accept != "" {
+		fmt.Fprintln(w, "You accept "+accept)
+	}
+
+	w.Write([]byte("======================"))
 }
 
 func main() {
