@@ -7,6 +7,10 @@ import (
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
+	param := r.URL.Query().Get("param")
+	if param != "" {
+		fmt.Fprintln(w, "Param from URL is "+param)
+	}
 	fmt.Fprintln(w, "test")
 	w.Write([]byte("!!!"))
 }
