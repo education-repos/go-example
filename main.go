@@ -30,9 +30,22 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("======================"))
 }
 
+func imgHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "text/html")
+	w.Write([]byte(`<img src='/data/img/go_logo.png' />`))
+}
+
 func main() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", handler)
+	mux.HandleFunc("/image", imgHandler)
+
+	staticHandler := http.StripPrefix(
+		"/data/",
+		http.FileServer(http.Dir("./static")),
+	)
+
+	mux.Handle("/data/", staticHandler)
 
 	server := http.Server{
 		Addr:         ":8080",
