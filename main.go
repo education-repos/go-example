@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	_ "github.com/go-sql-driver/mysql"
 	"go_server/internal/configs"
 	"go_server/internal/router"
 	"net/http"

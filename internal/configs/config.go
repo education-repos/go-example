@@ -11,6 +11,14 @@ type Config struct {
 		Port string `yaml:"port", envconfig:"SERVER_PORT"`
 		Host string `yaml:"host", envconfig:"SERVER_HOST"`
 	} `yaml:"server"`
+	Database struct {
+		Driver   string `yaml:"driver", envconfig:"DB_DRIVER_NAME"`
+		Host     string `yaml:"host", envconfig:"DB_HOST"`
+		Port     string `yaml:"port", envconfig:"DB_PORT"`
+		User     string `yaml:"user", envconfig:"DB_USERNAME"`
+		Password string `yaml:"password", envconfig:"DB_PASSWORD"`
+		Name     string `yaml:"name", envconfig:"DB_NAME"`
+	}
 }
 
 // обработка ошибок при работе с конфигом
@@ -45,3 +53,8 @@ func ReadFile(cfg *Config) {
 		processError(err)
 	}
 }*/
+
+// генерирует строку для подключения к БД
+func DsnString(cfg *Config) string {
+	return cfg.Database.User + ":" + cfg.Database.Password + "@tcp(" + cfg.Database.Host + ":" + cfg.Database.Port + ")/" + cfg.Database.Name
+}
