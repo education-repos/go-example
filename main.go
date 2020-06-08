@@ -2,17 +2,22 @@ package main
 
 import (
 	"fmt"
+	"go_server/internal/configs"
 	"go_server/internal/router"
 	"net/http"
 	"time"
 )
 
 func main() {
+	var cfg configs.Config
+	configs.ReadFile(&cfg)
+	//readEnv(&cfg)
+
 	mux := http.NewServeMux()
 	router.RegisterRoutes(mux)
 
 	server := http.Server{
-		Addr:         ":8080",
+		Addr:         cfg.Server.Host + ":" + cfg.Server.Port,
 		Handler:      mux,
 		ReadTimeout:  10 * time.Second,
 		WriteTimeout: 10 * time.Second,
